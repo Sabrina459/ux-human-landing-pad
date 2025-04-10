@@ -6,22 +6,25 @@ import ProjectsSection from "@/components/ProjectsSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import { useScrollSpy } from "@/hooks/use-scroll-spy";
 
 const Index = () => {
+  const activeSection = useScrollSpy();
+  
   useEffect(() => {
-    // Simpler animation approach for beginners
+    // Animate content that's in view on initial load
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add('in-view');
           }
         });
       },
       { threshold: 0.1 }
     );
     
-    const elements = document.querySelectorAll('.fade-in-section');
+    const elements = document.querySelectorAll('.animate-on-scroll');
     elements.forEach((el) => {
       observer.observe(el);
     });

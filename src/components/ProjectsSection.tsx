@@ -1,7 +1,8 @@
 
+import { useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLinkIcon } from "lucide-react";
 
 interface Project {
@@ -44,36 +45,68 @@ const projects: Project[] = [
 ];
 
 const ProjectsSection = () => {
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach((el) => {
+      observerRef.current?.observe(el);
+    });
+    
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
   return (
-    <section id="projects" className="py-16 bg-secondary/50">
+    <section id="projects" ref={sectionRef} className="py-20 bg-secondary/50">
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="text-center mb-12 fade-in-section">
-          <h2 className="text-3xl font-bold mb-4">
+        <div className="text-center mb-12 md:mb-16 animate-on-scroll">
+          <span className="text-primary font-medium tracking-wide text-sm md:text-base">
+            RESEARCH PROJECTS
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2">
             Featured UX Research Work
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Exploring human behavior and designing better experiences through research.
+          <p className="text-muted-foreground text-lg md:text-xl mt-4 max-w-2xl mx-auto">
+            Exploring human behavior and designing better experiences through rigorous research and thoughtful analysis.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="overflow-hidden fade-in-section">
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="h-60 w-full object-cover"
-              />
+            <Card key={index} className="overflow-hidden animate-on-scroll">
+              <div className="h-60 w-full overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="h-full w-full object-cover transition-transform hover:scale-105 duration-500"
+                />
+              </div>
               <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
-                <div className="flex flex-wrap gap-2 mt-2">
+                <CardTitle className="line-clamp-2">{project.title}</CardTitle>
+                <CardDescription className="flex flex-wrap gap-2 mt-2">
                   {project.tags.map((tag, tagIndex) => (
                     <Badge key={tagIndex} variant="secondary">{tag}</Badge>
                   ))}
-                </div>
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground line-clamp-3">
                   {project.description}
                 </p>
               </CardContent>
@@ -88,7 +121,7 @@ const ProjectsSection = () => {
           ))}
         </div>
         
-        <div className="text-center fade-in-section">
+        <div className="mt-12 text-center animate-on-scroll">
           <Button size="lg" variant="secondary" asChild>
             <a href="#" className="flex items-center gap-2">
               See All Projects <ExternalLinkIcon className="h-4 w-4" />
