@@ -30,20 +30,26 @@ const HeroSection = () => {
           </div>
         </div>
         
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <div className="text-4xl font-bold mb-2 text-primary">5+</div>
-            <div className="text-muted-foreground">Years Experience</div>
+        <div className="mt-16 space-y-6 max-w-3xl mx-auto">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-center">
+              <div className="text-4xl font-bold text-primary">5+</div>
+              <div className="ml-4 text-lg text-muted-foreground">Years Experience</div>
+            </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <div className="text-4xl font-bold mb-2 text-primary">20+</div>
-            <div className="text-muted-foreground">Research Projects</div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-center">
+              <div className="text-4xl font-bold text-primary">20+</div>
+              <div className="ml-4 text-lg text-muted-foreground">Research Projects</div>
+            </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <div className="text-4xl font-bold mb-2 text-primary">100+</div>
-            <div className="text-muted-foreground">User Interviews</div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-center">
+              <div className="text-4xl font-bold text-primary">100+</div>
+              <div className="ml-4 text-lg text-muted-foreground">User Interviews</div>
+            </div>
           </div>
         </div>
       </div>
